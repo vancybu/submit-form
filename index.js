@@ -1,34 +1,54 @@
-const callback = () => {
-  // Get the values of the first name and last name input fields
-  const fname = document.querySelector("#fname").value.trim();
-  const lname = document.querySelector("#lname").value.trim();
+$(document).ready(function () {
+  // Real-time validation for first name and last name
+  const validateInput = (inputId, errorId, errorMessage) => {
+    const value = $(`#${inputId}`).val().trim();
+    if (!value) {
+      $(`#${errorId}`).text(errorMessage).show();
+      return false;
+    } else {
+      $(`#${errorId}`).hide();
+      return true;
+    }
+  };
 
-  // Validation: Check if both fields are filled
-  if (!fname || !lname) {
-    alert("Please fill in both the first name and last name.");
-    return;
-  }
+  // Character counter for the message field
+  $("#message").on("input", function () {
+    const maxLength = $(this).attr("maxlength");
+    const currentLength = $(this).val().length;
+    $("#char-counter").text(`${currentLength}/${maxLength}`);
+  });
 
-  // Capitalize the first letter of the first name and make the rest lowercase
-  const firstCharOfFirstName = fname.slice(0, 1).toUpperCase();
-  const restOfChar = fname.slice(1).toLowerCase();
-  const firstname = `${firstCharOfFirstName}${restOfChar}`;
+  // Submit button click event
+  $(".submit-btn").on("click", function (e) {
+    e.preventDefault();
 
-  // Capitalize the first letter of the last name and make the rest lowercase
-  const firstCharOfLastname = lname.slice(0, 1).toUpperCase();
-  const restOfCharOfLastname = lname.slice(1).toLowerCase();
-  const lastname = `${firstCharOfLastname}${restOfCharOfLastname}`;
+    const isFnameValid = validateInput("fname", "fname-error", "First name is required.");
+    const isLnameValid = validateInput("lname", "lname-error", "Last name is required.");
 
-  // Combine the first name and last name
-  const name = `${firstname} ${lastname}`;
+    if (isFnameValid && isLnameValid) {
+      const fname = $("#fname").val().trim();
+      const lname = $("#lname").val().trim();
+      const message = $("#message").val().trim();
 
-  // Display the formatted name in the span element
-  document.querySelector("span").innerHTML = name;
+      // Display the results
+      $(".result-text").text(`Name: ${fname} ${lname}, Message: ${message}`);
+      $("#success-message").fadeIn().delay(3000).fadeOut();
+    }
+  });
 
-  // Log the formatted name to the console
-  console.log(name);
-};
+  // Reset button click event
+  $("#reset-btn").on("click", function () {
+    // Clear all input fields
+    $("#fname").val("");
+    $("#lname").val("");
+    $("#message").val("");
 
-// Add an event listener to the button to call the callback function on click
-const btn = document.querySelector(".btn");
-btn.addEventListener("click", callback);
+    // Reset error messages and character counter
+    $(".error-message").hide();
+    $("#char-counter").text("0/200");
+
+    // Clear results and success message
+    $(".result-text").text("");
+    $("#success-message").hide();
+  });
+});
