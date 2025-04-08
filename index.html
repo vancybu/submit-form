@@ -57,26 +57,19 @@
         </div>
         <!-- Submit and Reset Buttons -->
         <div class="button-group">
-          <input
-            type="submit"
-            value="Submit"
-            class="btn submit-btn"
-          />
-          <button
-            type="button"
-            id="reset-btn"
-            class="btn reset-btn"
-          >
+          <input type="submit" value="Submit" class="btn submit-btn" />
+          <button type="button" id="reset-btn" class="btn reset-btn">
             Reset
           </button>
         </div>
-        <!-- Results -->
-        <h2 class="results">
-          Results: <span class="result-text"></span>
-        </h2>
-        <div class="success-message" id="success-message">
-          Form submitted successfully!
-        </div>
+      </div>
+    </div>
+    <div class="popup-overlay" style="display: none">
+      <div class="popup-content">
+        <h2>Form Results</h2>
+        <p><strong>Full Name:</strong> <span id="popup-fullname"></span></p>
+        <p><strong>Message:</strong> <span id="popup-message"></span></p>
+        <button class="close-popup">Close</button>
       </div>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>

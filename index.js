@@ -18,22 +18,41 @@ $(document).ready(function () {
     $("#char-counter").text(`${currentLength}/${maxLength}`);
   });
 
+  // Function to populate the popup content
+  const populatePopup = (fname, lname, message) => {
+    $("#popup-fullname").text(`${fname} ${lname}`);
+    $("#popup-message").text(message);
+    $(".popup-overlay").show();
+  };
+
   // Submit button click event
   $(".submit-btn").on("click", function (e) {
     e.preventDefault();
 
-    const isFnameValid = validateInput("fname", "fname-error", "First name is required.");
-    const isLnameValid = validateInput("lname", "lname-error", "Last name is required.");
+    const isFnameValid = validateInput(
+      "fname",
+      "fname-error",
+      "First name is required."
+    );
+    const isLnameValid = validateInput(
+      "lname",
+      "lname-error",
+      "Last name is required."
+    );
 
     if (isFnameValid && isLnameValid) {
       const fname = $("#fname").val().trim();
       const lname = $("#lname").val().trim();
       const message = $("#message").val().trim();
 
-      // Display the results
-      $(".result-text").text(`Name: ${fname} ${lname}, Message: ${message}`);
-      $("#success-message").fadeIn().delay(3000).fadeOut();
+      // Populate and display the popup
+      populatePopup(fname, lname, message);
     }
+  });
+
+  // Close popup event
+  $(".close-popup").on("click", function () {
+    $(".popup-overlay").hide();
   });
 
   // Reset button click event
